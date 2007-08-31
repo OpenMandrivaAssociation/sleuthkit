@@ -16,7 +16,7 @@
 Summary: 	The Sleuth Kit
 Name:		sleuthkit
 Version:	2.05
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		File tools
 URL:		http://www.sleuthkit.org/sleuthkit/
@@ -144,4 +144,3 @@ install -m644 share/sorter/* %{buildroot}%{_datadir}/sorter/
 %{_mandir}/man1/sorter.1*
 %dir %{_datadir}/sorter/
 %{_datadir}/sorter/*
-
