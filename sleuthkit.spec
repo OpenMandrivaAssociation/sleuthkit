@@ -1,38 +1,24 @@
-
-# OE: conditional switches
-#
-#(ie. use with rpm --rebuild):
-#
-#	--with diet	Compile task against dietlibc
-#
-# 
-
-%define build_diet 0
-
-# commandline overrides:
-# rpm -ba|--rebuild --with 'xxx'
-%{?_with_diet: %{expand: %%define build_diet 1}}
-
 Summary: 	The Sleuth Kit
 Name:		sleuthkit
-Version:	2.05
-Release:	%mkrel 2
+Version:	2.09
+Release:	%mkrel 1
 License:	GPL
 Group:		File tools
 URL:		http://www.sleuthkit.org/sleuthkit/
-Source0:	http://prdownloads.sourceforge.net/sleuthkit/%{name}-%{version}.tar.bz2
+Source0:	http://prdownloads.sourceforge.net/sleuthkit/%{name}-%{version}.tar.gz
 Source1:	mac-robber-1.00.tar.bz2
-Patch0:		sleuthkit-2.05-nofile.diff
+Patch0:		sleuthkit-unbundle.diff
 Requires:	file
-Obsoletes:	task = %{version}
+Requires:	afflib
+Requires:	libewf
 Provides:	task = %{version}
+Obsoletes:	task = %{version}
 Conflicts:	dstat
-%if %{build_diet}
-BuildRequires:	dietlibc-devel >= 0.20-1mdk
-%endif
+BuildRequires:	afflib-devel
+BuildRequires:	libewf-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	zlib-devel
 BuildRequires:	openssl-devel
+BuildRequires:	zlib-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -53,18 +39,15 @@ automated operations.
 %prep
 
 %setup -q -n %{name}-%{version} -a1
-%patch0 -p0
+%patch0 -p1
+
+rm -rf src/afflib src/file src/libewf
 
 %build
 
-%if %{build_diet}
-    # OE: use the power of dietlibc
-    make CC="diet gcc -D_BSD_SOURCE -D_GNU_SOURCE -s -static"
-    diet gcc -D_BSD_SOURCE -D_GNU_SOURCE -s -static -o bin/mac-robber mac-robber-1.00/mac-robber.c
-%else
-    make COPTS="%{optflags}" OPT="%{optflags}"
-    gcc %{optflags} -o bin/mac-robber mac-robber-1.00/mac-robber.c
-%endif
+make COPTS="%{optflags}" OPT="%{optflags}"
+
+gcc %{optflags} -o bin/mac-robber mac-robber-1.00/mac-robber.c
 
 mv mac-robber-1.00/README README.mac-robber
 chmod 644 README.mac-robber
@@ -82,9 +65,6 @@ install -d %{buildroot}%{_mandir}/man1
 install -m755 bin/* %{buildroot}%{_bindir}/
 install -m644 man/man1/* %{buildroot}%{_mandir}/man1/
 install -m644 share/sorter/* %{buildroot}%{_datadir}/sorter/
-
-#rm -r $RPM_BUILD_ROOT%_bindir/file
-#rm -r $RPM_BUILD_ROOT%_mandir/man1/file.1
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
