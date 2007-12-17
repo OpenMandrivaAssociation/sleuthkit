@@ -19,7 +19,6 @@ BuildRequires:	libewf-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 The Sleuth Kit (previously known as TASK) is a collection of UNIX-based command
