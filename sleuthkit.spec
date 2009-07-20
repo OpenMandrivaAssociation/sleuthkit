@@ -1,13 +1,17 @@
+%define libver 3
+%define major 3
+%define libname		%mklibname tsk %{libver} %{major}
+%define develname	%mklibname tsk %{libver} -d
+
 Summary: 	The Sleuth Kit
 Name:		sleuthkit
-Version:	2.09
-Release:	%mkrel 4
+Version:	3.0.1
+Release:	%mkrel 1
 License:	GPL
 Group:		File tools
 URL:		http://www.sleuthkit.org/sleuthkit/
 Source0:	http://prdownloads.sourceforge.net/sleuthkit/%{name}-%{version}.tar.gz
 Source1:	mac-robber-1.00.tar.bz2
-Patch0:		sleuthkit-unbundle.diff
 Requires:	file
 Requires:	afflib
 Requires:	libewf
@@ -19,6 +23,7 @@ BuildRequires:	libewf-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
+BuildRequires:	libncurses-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -36,18 +41,35 @@ The Sleuth Kit, which allows one to more easily conduct an investigation.
 Autopsy provides case management, image integrity, keyword searching, and other
 automated operations.
 
+%package -n %{libname}
+Summary:	Library for %{name}
+Group:		System/Libraries
+
+%description -n %{libname}
+The %libname package contains library for %{name}.
+
+%package -n %{develname}
+Summary:	Development files for %{name}
+Group:		Development/C
+Requires:	%{libname} = %{version}
+
+%description -n %{develname}
+The %{develname} package contains libraries and header files for
+developing applications that use %{name}.
+
 %prep
-
 %setup -q -n %{name}-%{version} -a1
-%patch0 -p1
-
-rm -rf src/afflib src/file src/libewf
 
 %build
+autoreconf -fi
+%configure2_5x --disable-static
 
-make COPTS="%{optflags}" OPT="%{optflags}"
+# remove rpath from libtool
+sed -i.rpath 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i.rpath 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-gcc %{optflags} -o bin/mac-robber mac-robber-1.00/mac-robber.c
+make
+gcc %{optflags} -o mac-robber mac-robber-1.00/mac-robber.c
 
 mv mac-robber-1.00/README README.mac-robber
 chmod 644 README.mac-robber
@@ -56,28 +78,25 @@ chmod 644 README.mac-robber
 perl -pi -e "s|%{_builddir}/%{name}-%{version}|%{_prefix}|g" bin/sorter
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
-install -d %{buildroot}%{_bindir}
-install -d %{buildroot}%{_datadir}/sorter
-install -d %{buildroot}%{_mandir}/man1
-
-install -m755 bin/* %{buildroot}%{_bindir}/
-install -m644 man/man1/* %{buildroot}%{_mandir}/man1/
-install -m644 share/sorter/* %{buildroot}%{_datadir}/sorter/
+rm -rf %{buildroot}
+%makeinstall_std
+find %{buildroot} -name '*.la' -exec rm -f {} ';'
+install -m755 mac-robber %{buildroot}%{_bindir}/
 
 %clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc CHANGES.txt INSTALL.txt README.mac-robber README.txt TODO.txt licenses/* tct.docs/*
-%{_bindir}/dcalc
-%{_bindir}/dcat
+%doc CHANGES.txt README.txt licenses/* README.mac-robber
+%doc docs/other.txt docs/skins*.txt docs/ref*.txt
+# License is CPL 1.0 exept for some files.
+%{_bindir}/blkcalc
+%{_bindir}/blkcat
+%{_bindir}/blkls
+%{_bindir}/blkstat
 %{_bindir}/disk_sreset
 %{_bindir}/disk_stat
-%{_bindir}/dls
-%{_bindir}/dstat
 %{_bindir}/ffind
 %{_bindir}/fls
 %{_bindir}/fsstat
@@ -90,21 +109,25 @@ install -m644 share/sorter/* %{buildroot}%{_datadir}/sorter/
 %{_bindir}/istat
 %{_bindir}/jcat
 %{_bindir}/jls
-%{_bindir}/mac-robber
+# This file is described as GPL in the doc
+# But the license remains CPL in the source.
 %{_bindir}/mactime
-%{_bindir}/md5
+%{_bindir}/mac-robber
+##
+%{_bindir}/mmcat
 %{_bindir}/mmls
 %{_bindir}/mmstat
-%{_bindir}/sha1
 %{_bindir}/sigfind
 %{_bindir}/sorter
+## This file is GPLv2+
 %{_bindir}/srch_strings
-%{_mandir}/man1/dcalc.1*
-%{_mandir}/man1/dcat.1*
+#
+%{_mandir}/man1/blkcalc.1*
+%{_mandir}/man1/blkcat.1*
+%{_mandir}/man1/blkls.1*
+%{_mandir}/man1/blkstat.1*
 %{_mandir}/man1/disk_sreset.1*
 %{_mandir}/man1/disk_stat.1*
-%{_mandir}/man1/dls.1*
-%{_mandir}/man1/dstat.1*
 %{_mandir}/man1/ffind.1*
 %{_mandir}/man1/fls.1*
 %{_mandir}/man1/fsstat.1*
@@ -118,9 +141,22 @@ install -m644 share/sorter/* %{buildroot}%{_datadir}/sorter/
 %{_mandir}/man1/jcat.1*
 %{_mandir}/man1/jls.1*
 %{_mandir}/man1/mactime.1*
+%{_mandir}/man1/mmcat.1*
 %{_mandir}/man1/mmls.1*
 %{_mandir}/man1/mmstat.1*
 %{_mandir}/man1/sigfind.1*
 %{_mandir}/man1/sorter.1*
-%dir %{_datadir}/sorter/
-%{_datadir}/sorter/*
+%dir %{_datadir}/tsk3
+%{_datadir}/tsk3/sorter/
+
+%files -n %{libname}
+%defattr(-,root,root,-)
+%{_libdir}/libtsk3.so.%{major}*
+
+%files -n %{develname}
+%defattr(-,root,root,-)
+%doc docs/library-api.txt
+# CPL and IBM
+%{_includedir}/tsk3/
+%{_libdir}/libtsk3.so
+
