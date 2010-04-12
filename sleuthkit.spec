@@ -6,12 +6,13 @@
 Summary: 	The Sleuth Kit
 Name:		sleuthkit
 Version:	3.0.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		File tools
 URL:		http://www.sleuthkit.org/sleuthkit/
 Source0:	http://prdownloads.sourceforge.net/sleuthkit/%{name}-%{version}.tar.gz
 Source1:	mac-robber-1.00.tar.bz2
+Patch0:		sleuthkit-3.0.1-link.patch
 Requires:	file
 Requires:	afflib
 Requires:	libewf
@@ -59,6 +60,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{name}-%{version} -a1
+%patch0 -p0
 
 %build
 autoreconf -fi
