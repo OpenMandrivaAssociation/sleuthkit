@@ -6,7 +6,7 @@
 Summary: 	The Sleuth Kit
 Name:		sleuthkit
 Version:	3.0.1
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPL
 Group:		File tools
 URL:		http://www.sleuthkit.org/sleuthkit/
