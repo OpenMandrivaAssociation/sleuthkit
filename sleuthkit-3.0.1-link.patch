@@ -1,0 +1,70 @@
+--- samples/Makefile.am.ldflags	2010-04-12 08:25:18.000000000 +0200
++++ samples/Makefile.am	2010-04-12 08:25:18.000000000 +0200
+@@ -1,6 +1,6 @@
+ AM_CPPFLAGS = -I.. -Wall 
+ LDADD = ../tsk3/libtsk3.la
+-LDFLAGS = -static
++LDFLAGS += -static
+ EXTRA_DIST = .indent.pro 
+ 
+ noinst_PROGRAMS = posix_style callback_style
+--- tests/Makefile.am.ldflags	2010-04-12 08:25:18.000000000 +0200
++++ tests/Makefile.am	2010-04-12 08:25:18.000000000 +0200
+@@ -1,6 +1,6 @@
+ AM_CPPFLAGS = -I.. -Wall 
+ LDADD = ../tsk3/libtsk3.la
+-LDFLAGS = -static
++LDFLAGS += -static
+ EXTRA_DIST = .indent.pro 
+ 
+ noinst_PROGRAMS = read_apis fs_fname_apis fs_attrlist_apis
+--- tools/disktools/Makefile.am.ldflags	2010-04-12 08:25:18.000000000 +0200
++++ tools/disktools/Makefile.am	2010-04-12 08:25:18.000000000 +0200
+@@ -1,6 +1,6 @@
+ AM_CPPFLAGS = -I../.. -Wall
+ LDADD = ../../tsk3/libtsk3.la
+-LDFLAGS = -static
++LDFLAGS += -static
+ EXTRA_DIST = .indent.pro
+ 
+ bin_PROGRAMS = disk_stat disk_sreset
+--- tools/fstools/Makefile.am.ldflags	2010-04-12 08:25:18.000000000 +0200
++++ tools/fstools/Makefile.am	2010-04-12 08:25:18.000000000 +0200
+@@ -1,6 +1,6 @@
+ AM_CPPFLAGS = -I../.. -Wall 
+ LDADD = ../../tsk3/libtsk3.la
+-LDFLAGS = -static
++LDFLAGS += -static
+ EXTRA_DIST = .indent.pro fscheck.cpp
+ 
+ bin_PROGRAMS = blkcalc blkcat blkls blkstat ffind fls fsstat icat ifind ils \
+--- tools/hashtools/Makefile.am.ldflags	2010-04-12 08:25:18.000000000 +0200
++++ tools/hashtools/Makefile.am	2010-04-12 08:25:18.000000000 +0200
+@@ -1,6 +1,6 @@
+ AM_CPPFLAGS = -I../.. -Wall 
+ LDADD = ../../tsk3/libtsk3.la
+-LDFLAGS = -static
++LDFLAGS += -static
+ EXTRA_DIST = .indent.pro md5.c sha1.c
+ 
+ bin_PROGRAMS = hfind
+--- tools/imgtools/Makefile.am.ldflags	2010-04-12 08:25:18.000000000 +0200
++++ tools/imgtools/Makefile.am	2010-04-12 08:25:18.000000000 +0200
+@@ -1,6 +1,6 @@
+ AM_CPPFLAGS = -I../.. -Wall
+ LDADD = ../../tsk3/libtsk3.la
+-LDFLAGS = -static
++LDFLAGS += -static
+ EXTRA_DIST = .indent.pro
+ 
+ bin_PROGRAMS = img_cat img_stat
+--- tools/vstools/Makefile.am.ldflags	2010-04-12 08:25:18.000000000 +0200
++++ tools/vstools/Makefile.am	2010-04-12 08:25:18.000000000 +0200
+@@ -1,6 +1,6 @@
+ AM_CPPFLAGS = -I../.. -Wall 
+ LDADD = ../../tsk3/libtsk3.la
+-LDFLAGS = -static
++LDFLAGS += -static
+ EXTRA_DIST = .indent.pro
+ 
+ bin_PROGRAMS = mmls mmstat mmcat
