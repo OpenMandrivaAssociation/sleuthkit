@@ -1,0 +1,13 @@
+Index: sleuthkit-4.0.1/tsk3/Makefile.am
+===================================================================
+--- sleuthkit-4.0.1.orig/tsk3/Makefile.am
++++ sleuthkit-4.0.1/tsk3/Makefile.am
+@@ -6,7 +6,7 @@ lib_LTLIBRARIES = libtsk3.la
+ libtsk3_la_SOURCES =
+ libtsk3_la_LIBADD = base/libtskbase.la img/libtskimg.la \
+     vs/libtskvs.la fs/libtskfs.la hashdb/libtskhashdb.la \
+-    auto/libtskauto.la
++    auto/libtskauto.la -lstdc++
+ # current:revision:age
+ libtsk3_la_LDFLAGS = -version-info 9:0:0
+ 
