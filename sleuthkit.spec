@@ -6,7 +6,7 @@
 Summary: 	The Sleuth Kit
 Name:		sleuthkit
 Version:	4.0.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		File tools
 URL:		http://www.sleuthkit.org/sleuthkit/
