@@ -12,12 +12,12 @@
 
 Summary: 	The Sleuth Kit
 Name:		sleuthkit
-Version:	4.11.1
+Version:	4.12.0
 Release:	1
 License:	CPL and IBM and GPLv2+
 Group:		File tools
 URL:		http://www.sleuthkit.org/sleuthkit/
-Source0:	https://github.com/sleuthkit/%{name}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/sleuthkit/sleuthkit/archive/%{name}-%{version}.tar.gz
 #BuildRequires:  intltool
 %{?with_afflib:BuildRequires:	pkgconfig(afflib)}
 %{?with_tests:BuildRequires:	pkgconfig(cppunit)}
