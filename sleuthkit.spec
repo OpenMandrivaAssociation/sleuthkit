@@ -12,7 +12,7 @@
 
 Summary: 	The Sleuth Kit
 Name:		sleuthkit
-Version:	4.12.0
+Version:	4.12.1
 Release:	1
 License:	CPL and IBM and GPLv2+
 Group:		File tools
