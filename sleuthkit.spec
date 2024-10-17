@@ -16,7 +16,7 @@ Version:	4.12.1
 Release:	1
 License:	CPL and IBM and GPLv2+
 Group:		File tools
-URL:		http://www.sleuthkit.org/sleuthkit/
+URL:		https://www.sleuthkit.org/sleuthkit/
 Source0:	https://github.com/sleuthkit/sleuthkit/archive/%{name}-%{version}.tar.gz
 #BuildRequires:  intltool
 %{?with_afflib:BuildRequires:	pkgconfig(afflib)}
