@@ -24,6 +24,11 @@ Source0:	https://github.com/sleuthkit/sleuthkit/archive/%{name}-%{version}.tar.g
 %{?with_libewf:BuildRequires:	pkgconfig(libewf)}
 %{?with_libvhdi:BuildRequires:	pkgconfig(libvhdi)}
 %{?with_libvmdk:BuildRequires:	pkgconfig(libvmdk)}
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:		pkgconfig(ncurses)
 BuildRequires:		pkgconfig(openssl)
 BuildRequires:		pkgconfig(sqlite3)
