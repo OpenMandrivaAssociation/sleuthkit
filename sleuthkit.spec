@@ -12,7 +12,7 @@
 
 Summary: 	The Sleuth Kit
 Name:		sleuthkit
-Version:	4.12.1
+Version:	4.15.0
 Release:	1
 License:	CPL and IBM and GPLv2+
 Group:		File tools
@@ -174,7 +174,7 @@ developing applications that use %{name}.
 #---------------------------------------------------------------------------
 
 %prep
-%autosetup -p1 -n %{name}-%{name}-%{version}
+%autosetup -p1 -n sleuthkit-sleuthkit-4.15.0
 
 %build
 export LDFLAGS+=-lsqlite3
